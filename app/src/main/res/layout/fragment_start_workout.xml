@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.constraint.ConstraintLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:id="@+id/tv_start_new_workout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:text="Start New Workout"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_select_exercise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="30dp"
+            android:text="Select Exercise"
+            android:textAlignment="viewStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_start_new_workout" />
+
+        <NumberPicker
+            android:id="@+id/picker_select_exercise"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_select_exercise" />
+
+
+        <TextView
+            android:id="@+id/tv_select_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:text="Select Time Interval"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/picker_select_exercise" />
+
+        <NumberPicker
+            android:id="@+id/picker_select_interval"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_select_interval"
+            />
+
+        <TextView
+            android:id="@+id/tv_select_reps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="24dp"
+            android:text="Select Reps"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/picker_select_exercise" />
+
+        <NumberPicker
+            android:id="@+id/picker_select_reps"
+            android:descendantFocusability="blocksDescendants"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_select_reps" />
+
+
+
+    </android.support.constraint.ConstraintLayout>
+</ScrollView>

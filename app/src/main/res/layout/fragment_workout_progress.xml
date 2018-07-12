@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:id="@+id/fragment_workout_container"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:src="@drawable/dark_background"
+        android:scaleType="fitXY"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--TIMER-->
+        <com.swolebrain.officefitness.workout.TimerView
+            android:id="@+id/tv_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:text="30:00"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_finish_workout"
+            android:text="Finish Workout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/label_time_to_next_set"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Time to Next Set"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_timer" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>
