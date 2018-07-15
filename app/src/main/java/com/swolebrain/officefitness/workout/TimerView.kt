@@ -53,7 +53,7 @@ class TimerView(c: Context, attrs: AttributeSet) : TextView(c, attrs){
                 drawerMenuActivity = c;
                 return c;
             }
-            c = (c as ContextWrapper).baseContext
+            c = c.baseContext
         }
         throw Exception("Error while trying to get activity")
     }

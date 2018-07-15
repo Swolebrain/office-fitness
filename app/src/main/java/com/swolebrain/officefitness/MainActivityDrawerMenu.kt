@@ -44,7 +44,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setContentView(R.layout.activity_drawer_menu)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
+        fab.setOnClickListener { _ ->
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                    .setAction("Action", null).show()
             launchWorkout()

@@ -9,7 +9,8 @@
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:id="@+id/fragment_workout_container"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:keepScreenOn="true">
 
     <ImageView
         android:src="@drawable/dark_background"
