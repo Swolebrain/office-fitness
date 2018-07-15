@@ -2,9 +2,11 @@ package com.swolebrain.officefitness.workout
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import kotlinx.android.synthetic.main.fragment_start_workout.*
@@ -26,22 +28,68 @@ public class StartWorkoutFragment : Fragment() {
 
     fun configurePickers() {
         val selectedEx = ExerciseViewModel.workoutConfig;
+        //min value, max value, and labels
         picker_select_exercise.minValue = 0
         picker_select_exercise.maxValue = 4
         picker_select_exercise.displayedValues = exerciseNames.toTypedArray()
-        picker_select_exercise.value = if (selectedEx.exerciseName.length > 0) exerciseNames.indexOf(selectedEx.exerciseName) else 0
+        //sync picker with data model
+        if (selectedEx.exerciseName.length > 0){
+            picker_select_exercise.value =  exerciseNames.indexOf(selectedEx.exerciseName)
+        }
+        else {
+            picker_select_exercise.value =  0
+            ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[0]
+        }
+        //value chnange listener
+        picker_select_exercise.setOnValueChangedListener({ np : NumberPicker, oldVal : Int, newVal : Int ->
+            ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[newVal]
+            Log.d("####PICKER CHANGED", ""+oldVal +" " +newVal + " - " + exerciseNames[newVal] + " - " + ExerciseViewModel.workoutConfig.exerciseName)
+        })
 
+        //min value, max value, and labels
         picker_select_interval.minValue = 0
         picker_select_interval.maxValue = 11
-//        val intervalValue = if (selectedEx.timeInterval >= 0) exerciseIntervals.values.toTypedArray().indexOf(selectedEx.timeInterval) else 7
-//        picker_select_interval.value = exerciseIntervals.filter { (k,v) -> return v == intervalValue }
-        picker_select_interval.value = 7
         picker_select_interval.displayedValues = exerciseIntervals.keys.toTypedArray()
+        //sync picker with data model
+        val previousSelectedInterval : Int = ExerciseViewModel.workoutConfig.timeInterval
+        when(previousSelectedInterval){
+            -1 -> {
+                picker_select_interval.value = 7
+                ExerciseViewModel.workoutConfig.timeInterval = 120
+            }
+            else -> {
+                val selectedKey : String? = exerciseIntervals.entries.associateBy({ it.value}) {it.key}[previousSelectedInterval]
+                exerciseIntervals.keys.forEachIndexed { index, key ->
+                    if (key == selectedKey) picker_select_interval.value = index
+                }
+            }
+        }
 
+        //value change listener
+        picker_select_interval.setOnValueChangedListener({ np : NumberPicker, oldVal : Int, newVal : Int ->
+            val selectedKey : String = exerciseIntervals.keys.toTypedArray()[newVal]
+            ExerciseViewModel.workoutConfig.timeInterval= when(exerciseIntervals[selectedKey]){
+                null -> 0
+                else -> exerciseIntervals[selectedKey] as Int
+            }
+        })
+
+        //min value, max value, and labels
         picker_select_reps.minValue = 0
         picker_select_reps.maxValue = 19
-        picker_select_reps.value = if (selectedEx.repetitions != -1 ) exerciseReps.map{it.toInt()}.indexOf(selectedEx.repetitions) else 4
         picker_select_reps.displayedValues = exerciseReps.toTypedArray()
+        //sync picker with data model
+        if (selectedEx.repetitions == -1){
+            picker_select_reps.value = 4
+            ExerciseViewModel.workoutConfig.repetitions = 5
+        }
+        else {
+            picker_select_reps.value = exerciseReps.map{it.toInt()}.indexOf(selectedEx.repetitions)
+        }
+
+        picker_select_reps.setOnValueChangedListener({ np: NumberPicker, oldVal: Int, newVal: Int ->
+            ExerciseViewModel.workoutConfig.repetitions = newVal + 1
+        })
     }
 
     companion object {

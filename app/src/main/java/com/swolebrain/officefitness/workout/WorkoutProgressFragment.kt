@@ -1,5 +1,6 @@
 package com.swolebrain.officefitness.workout
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -16,16 +17,27 @@ import kotlinx.android.synthetic.main.fragment_workout_progress.*
  */
 class WorkoutProgressFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        WorkoutProgressViewModel.workoutProgress.startTime = System.currentTimeMillis()
+
         return inflater.inflate(R.layout.fragment_workout_progress, container, false)
     }
 
-    override fun onResume() {
-        super.onResume()
-        activity?.title = ExerciseViewModel.workoutConfig.exerciseName
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         btn_finish_workout.setOnClickListener { e ->
             val drawerActivity = activity as DrawerMenuActivity
             drawerActivity?.selectFragment(WorkoutResultsFragment())
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        tv_timer.durationSeconds = ExerciseViewModel.workoutConfig.timeInterval
+    }
+
+    override fun onResume() {
+        super.onResume()
+        tv_timer.durationSeconds = ExerciseViewModel.workoutConfig.timeInterval
+        activity?.title = ExerciseViewModel.workoutConfig.exerciseName
+
     }
 }

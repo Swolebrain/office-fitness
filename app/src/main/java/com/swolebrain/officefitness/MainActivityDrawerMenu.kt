@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -122,11 +123,10 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun launchWorkout(){
-        ExerciseViewModel.workoutConfig.exerciseName= StartWorkoutFragment.exerciseNames[picker_select_exercise.value]
-        val selectedExerciseIntervalKey = StartWorkoutFragment.exerciseIntervals.keys.toTypedArray()[picker_select_interval.value]
-        ExerciseViewModel.workoutConfig.timeInterval = StartWorkoutFragment.exerciseIntervals[selectedExerciseIntervalKey]
-        ExerciseViewModel.workoutConfig.repetitions = StartWorkoutFragment.exerciseReps[picker_select_reps.value].toInt()
 
+//        ExerciseViewModel.workoutConfig.repetitions = StartWorkoutFragment.exerciseReps[picker_select_reps.value].toInt()
+        WorkoutProgressViewModel.workoutProgress.startTime = System.currentTimeMillis()
+        Log.d("vic-LAUNCHING WORKOUT", StartWorkoutFragment.exerciseNames[picker_select_exercise.value])
         selectFragment(WorkoutProgressFragment())
     }
 
@@ -139,9 +139,12 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         else fab.visibility = View.GONE
     }
 
-    fun recordCompletedSet(numReps:Int){
-        WorkoutProgressViewModel.workoutProgress.repsCompleted += numReps
+    fun recordCompletedSet(){
+        Log.d("RECORDCOMPLETED", "###############################################################################################################################################################################################################")
+//        if (ExerciseViewModel.workoutConfig.repetitions == -1) return
+        WorkoutProgressViewModel.workoutProgress.repsCompleted += ExerciseViewModel.workoutConfig.repetitions
         WorkoutProgressViewModel.workoutProgress.setsCompleted += 1
+        selectFragment(WorkoutProgressFragment())
     }
 
 }

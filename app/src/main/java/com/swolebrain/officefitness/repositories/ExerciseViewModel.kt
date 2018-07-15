@@ -2,8 +2,8 @@ package com.swolebrain.officefitness.repositories
 
 data class ExerciseViewModel(
         var exerciseName: String,
-        var timeInterval: Int?,
-        var repetitions: Int?,
+        var timeInterval: Int,
+        var repetitions: Int,
         var exerciseCTA:String = exerciseName){
 
     companion object {
