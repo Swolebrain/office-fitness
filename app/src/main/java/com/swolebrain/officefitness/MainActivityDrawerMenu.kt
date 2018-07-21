@@ -123,9 +123,9 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun launchWorkout(){
-
-//        ExerciseViewModel.workoutConfig.repetitions = StartWorkoutFragment.exerciseReps[picker_select_reps.value].toInt()
         WorkoutProgressViewModel.workoutProgress.startTime = System.currentTimeMillis()
+        WorkoutProgressViewModel.workoutProgress.repsCompleted = 0
+        WorkoutProgressViewModel.workoutProgress.setsCompleted = 0
         Log.d("vic-LAUNCHING WORKOUT", StartWorkoutFragment.exerciseNames[picker_select_exercise.value])
         selectFragment(WorkoutProgressFragment())
     }

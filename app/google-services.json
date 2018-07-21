@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1048424997589",
+    "firebase_url": "https://office-fitness-7c8d3.firebaseio.com",
+    "project_id": "office-fitness-7c8d3",
+    "storage_bucket": "office-fitness-7c8d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048424997589:android:11bdae57e6de216c",
+        "android_client_info": {
+          "package_name": "com.swolebrain.officefitness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048424997589-5a968oqnkt0m9p383k2i8v7baktup9dc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAwyvdVG67PDTdLve2nP9RoY6pcioBqPs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
