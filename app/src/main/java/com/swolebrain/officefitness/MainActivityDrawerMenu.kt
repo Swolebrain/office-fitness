@@ -1,8 +1,11 @@
 package com.swolebrain.officefitness
 
+import android.app.Activity
+import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -21,10 +24,25 @@ import com.swolebrain.officefitness.workout.WorkoutProgressFragment
 import kotlinx.android.synthetic.main.activity_drawer_menu.*
 import kotlinx.android.synthetic.main.app_bar_drawer_menu.*
 import kotlinx.android.synthetic.main.fragment_start_workout.*
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.swolebrain.officefitness.settings.HomeFragment
+import kotlinx.android.synthetic.main.content_drawer_menu.*
+
 
 class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var exerciseViewModel = ExerciseViewModel.workoutConfig
+    private val RC_SIGN_IN : Int = 123
+    val providers = listOf(
+            AuthUI.IdpConfig.EmailBuilder().build()
+//            AuthUI.IdpConfig.PhoneBuilder().build(),
+//            AuthUI.IdpConfig.GoogleBuilder().build(),
+//            AuthUI.IdpConfig.FacebookBuilder().build(),
+//            AuthUI.IdpConfig.TwitterBuilder().build(),
+    )
 
     private val onBackStackChanged =  {
         var currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
@@ -32,7 +50,6 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         if (currentFragment is HistoryFragment) nav_view.setCheckedItem(R.id.nav_history)
         if (currentFragment is LeaderBoardFragment) nav_view.setCheckedItem(R.id.nav_leader_board)
         if (currentFragment is SettingsFragment) nav_view.setCheckedItem(R.id.nav_settings)
-
         if (currentFragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
         else fab.visibility = View.GONE
     }
@@ -44,9 +61,9 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setContentView(R.layout.activity_drawer_menu)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { _ ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Launching workout...", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show()
             launchWorkout()
         }
 
@@ -57,11 +74,19 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         nav_view.setNavigationItemSelectedListener(this)
 
-        //handle selecting first fragment
-        selectFragment(StartWorkoutFragment())
-
-
         supportFragmentManager?.addOnBackStackChangedListener(onBackStackChanged)
+
+        //handle selecting first fragment
+        val user = FirebaseAuth.getInstance().currentUser
+        Log.d("####", "CurrentUser: "+ user?.email)
+        if (user == null){
+            selectFragment(HomeFragment())
+        }
+        else {
+            selectFragment(StartWorkoutFragment())
+        }
+
+
     }
 
 
@@ -145,6 +170,36 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         WorkoutProgressViewModel.workoutProgress.repsCompleted += ExerciseViewModel.workoutConfig.repetitions
         WorkoutProgressViewModel.workoutProgress.setsCompleted += 1
         selectFragment(WorkoutProgressFragment())
+    }
+
+    fun startLogin(){
+        this.startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN
+        )
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode != RC_SIGN_IN) return
+
+        val response = if (IdpResponse.fromResultIntent(data) != null) IdpResponse.fromResultIntent(data) else return
+        //returned if they hit back button
+
+        if (resultCode != Activity.RESULT_OK) {
+            val error = response?.error?.errorCode
+            Snackbar.make(this.content_frame, "Error - "+ error, Snackbar.LENGTH_LONG)
+                    .setAction("Action", null)
+                    .show()
+        }
+
+        val user: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        Log.d("####", user.email + " " + user.getIdToken(true))
+
+        selectFragment(StartWorkoutFragment())
     }
 
 }
