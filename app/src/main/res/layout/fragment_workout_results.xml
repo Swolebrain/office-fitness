@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Exercise:"
+        android:text="@string/label_exercise_type"
         app:layout_constraintEnd_toStartOf="@+id/tv_exercise_name"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
-        android:text="Squats"
+        tools:text="Squats"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_exercise_type"
@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Reps Performed:"
+        android:text="@string/label_reps_performed"
         android:textAlignment="viewStart"
         app:layout_constraintEnd_toStartOf="@+id/tv_reps_performed"
         app:layout_constraintHorizontal_bias="0.5"
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="24dp"
-        android:text="88"
+        tools:text="88"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_reps_performed"
@@ -61,22 +61,45 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
-        android:text="Time Elapsed"
+        android:text="@string/label_time_elapsed"
         app:layout_constraintEnd_toStartOf="@+id/tv_time_elapsed"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_reps_performed" />
+        app:layout_constraintTop_toBottomOf="@+id/label_sets_performed" />
 
     <TextView
         android:id="@+id/tv_time_elapsed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
-        android:text="0:33:58"
+        tools:text="0:33:58"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/label_time_elapsed"
+        app:layout_constraintTop_toBottomOf="@+id/tv_sets_performed" />
+
+    <TextView
+        android:id="@+id/label_sets_performed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/label_sets_performed"
+        app:layout_constraintEnd_toStartOf="@+id/tv_sets_performed"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_reps_performed" />
+
+    <TextView
+        android:id="@+id/tv_sets_performed"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="24dp"
+        tools:text="6"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/label_sets_performed"
         app:layout_constraintTop_toBottomOf="@+id/tv_reps_performed" />
 </android.support.constraint.ConstraintLayout>

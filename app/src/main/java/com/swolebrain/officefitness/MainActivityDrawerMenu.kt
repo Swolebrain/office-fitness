@@ -28,6 +28,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import com.swolebrain.officefitness.settings.HomeFragment
 import kotlinx.android.synthetic.main.content_drawer_menu.*
 
@@ -62,8 +63,8 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Launching workout...", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+//            Snackbar.make(view, "Launching workout...", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null).show()
             launchWorkout()
         }
 
@@ -78,7 +79,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         //handle selecting first fragment
         val user = FirebaseAuth.getInstance().currentUser
-        Log.d("####", "CurrentUser: "+ user?.email)
+        Log.d("####", "CurrentUser: "+ user?.uid)
         if (user == null){
             selectFragment(HomeFragment())
         }
@@ -88,8 +89,6 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
 
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()
@@ -172,11 +171,14 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         selectFragment(WorkoutProgressFragment())
     }
 
+
     fun startLogin(){
         this.startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setLogo(R.mipmap.ic_launcher)
+                        .setTheme(R.style.ThemeOverlay_AppCompat_Dark)
                         .build(),
                 RC_SIGN_IN
         )
