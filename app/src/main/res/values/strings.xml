@@ -14,4 +14,5 @@
     <string name="label_reps_performed">Reps Performed:</string>
     <string name="label_time_elapsed">Time Elapsed</string>
     <string name="label_sets_performed">Sets Performed</string>
+    <string name="dashes">--</string>
 </resources>
