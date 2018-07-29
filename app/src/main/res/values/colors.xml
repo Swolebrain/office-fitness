@@ -23,5 +23,9 @@
     <!-- 4th Gradient color -->
     <color name="colorRed_A400">#FF1744</color>
     <color name="colorRed_900">#B71C1C</color>
+    <color name="OFT_cream">#ecf0c6</color>
+    <color name="light_green">#83b371</color>
+    <color name="deep_purple">#352549</color>
+    <color name="light_purple">#754163</color>
     <!-- ./ 4th Gradient color -->
 </resources>

@@ -22,7 +22,7 @@ public class HomeFragment : Fragment() {
         activity?.title = "Office Fitness"
         val mainActivity = activity as DrawerMenuActivity
         btn_log_in.setOnClickListener{
-            mainActivity.startLogin()
+//            mainActivity.startLogin()
         }
         btn_start_workout.setOnClickListener{
             mainActivity.selectFragment(StartWorkoutFragment())

@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
         <item name="android:windowTranslucentStatus">true</item>
     </style>
 
@@ -18,5 +17,19 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_theme_bg</item>
+    </style>
+
+    <style name="CustomFirebaseUITheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">@color/deep_purple</item>
+        <item name="colorPrimaryDark">@color/deep_purple</item>
+        <item name="colorAccent">@color/light_green</item>
+        <item name="android:windowBackground">@color/light_purple</item>
+        <item name="android:textColor">@color/OFT_cream</item>
+        <item name="android:fontFamily">@font/nunito</item>
+    </style>
 
 </resources>
