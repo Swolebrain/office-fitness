@@ -3,11 +3,21 @@ package com.swolebrain.officefitness
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
 import com.swolebrain.officefitness.repositories.loadWorkoutLogs
+
+const val RC_SIGN_IN : Int = 123
+val providers = listOf(
+        AuthUI.IdpConfig.EmailBuilder().build()
+//            AuthUI.IdpConfig.PhoneBuilder().build(),
+//            AuthUI.IdpConfig.GoogleBuilder().build(),
+//            AuthUI.IdpConfig.FacebookBuilder().build(),
+//            AuthUI.IdpConfig.TwitterBuilder().build(),
+)
 
 fun recordCompletedWorkout(secondsElapsed: Long){
     val currentUserAuth = FirebaseAuth.getInstance().currentUser

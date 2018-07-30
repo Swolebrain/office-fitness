@@ -6,23 +6,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.util.Log
-import android.view.Window
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_login_prompt.*
-import kotlinx.android.synthetic.main.content_drawer_menu.*
+import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 
 class LoginPromptActivity : AppCompatActivity() {
-    private val RC_SIGN_IN : Int = 123
-    val providers = listOf(
-            AuthUI.IdpConfig.EmailBuilder().build()
-//            AuthUI.IdpConfig.PhoneBuilder().build(),
-//            AuthUI.IdpConfig.GoogleBuilder().build(),
-//            AuthUI.IdpConfig.FacebookBuilder().build(),
-//            AuthUI.IdpConfig.TwitterBuilder().build(),
-    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +61,7 @@ class LoginPromptActivity : AppCompatActivity() {
 
         if (resultCode != Activity.RESULT_OK) {
             val error = response?.error?.errorCode
-            Snackbar.make(this.content_frame, "Error - "+ error, Snackbar.LENGTH_LONG)
+            Snackbar.make(this.drawer_menu_fragment_holder, "Error - "+ error, Snackbar.LENGTH_LONG)
                     .setAction("Action", null)
                     .show()
             return

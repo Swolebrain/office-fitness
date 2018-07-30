@@ -18,4 +18,5 @@
     <string name="btn_log_in">Log In</string>
     <string name="btn_start_workout">Start Workout</string>
     <string name="welcome_text">Welcome to office fitness! You must log in if you want your workouts to be tracked over time. Otherwise, You can simply start a new workout.</string>
+    <string name="app_tagline">Keep in shape while you work</string>
 </resources>

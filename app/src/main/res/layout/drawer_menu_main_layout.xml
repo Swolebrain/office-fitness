@@ -16,12 +16,17 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@android:color/background_dark"
+            android:background="@color/deep_purple"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_drawer_menu" />
+    <FrameLayout
+        android:id="@+id/drawer_menu_fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.swolebrain.officefitness.DrawerMenuActivity"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -29,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        app:backgroundTint="@android:color/background_dark"
+        app:backgroundTint="@color/deep_purple"
         app:srcCompat="@drawable/ic_play_circle_outline" />
 
 </android.support.design.widget.CoordinatorLayout>

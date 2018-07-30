@@ -1,12 +1,9 @@
 package com.swolebrain.officefitness
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Bundle
 import android.support.design.widget.NavigationView
-import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
@@ -23,38 +20,17 @@ import com.swolebrain.officefitness.settings.SettingsFragment
 import com.swolebrain.officefitness.workout.StartWorkoutFragment
 import com.swolebrain.officefitness.workout.WorkoutProgressFragment
 import kotlinx.android.synthetic.main.activity_drawer_menu.*
-import kotlinx.android.synthetic.main.app_bar_drawer_menu.*
 import kotlinx.android.synthetic.main.fragment_start_workout.*
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
-import com.swolebrain.officefitness.R.id.nav_log_out
-import com.swolebrain.officefitness.settings.HomeFragment
-import kotlinx.android.synthetic.main.content_drawer_menu.*
+import kotlinx.android.synthetic.main.activity_drawer_menu.view.*
+import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 
 
 class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     var exerciseViewModel = ExerciseViewModel.workoutConfig
 
-
-    private val onBackStackChanged =  {
-        val currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
-        when (currentFragment) {
-            is StartWorkoutFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
-            is HistoryFragment -> nav_view.setCheckedItem(R.id.nav_history)
-            is LeaderBoardFragment -> nav_view.setCheckedItem(R.id.nav_leader_board)
-            is SettingsFragment -> nav_view.setCheckedItem(R.id.nav_settings)
-        }
-
-        if (currentFragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
-        else fab.visibility = View.GONE
-    }
-
-
-    @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         window.setFormat(PixelFormat.RGBA_8888)
@@ -70,6 +46,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
+        drawer_layout.nav_view
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
@@ -77,18 +54,47 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         supportFragmentManager?.addOnBackStackChangedListener(onBackStackChanged)
 
         selectFragment(StartWorkoutFragment())
-        val currentUSer = FirebaseAuth.getInstance().currentUser
-        val logOutItem : MenuItem = nav_view.findViewById<View>(R.id.nav_log_out) as MenuItem
-        val logInItem : MenuItem = nav_view.findViewById<View>(R.id.nav_log_in) as MenuItem
-        if (currentUSer == null){
-            logOutItem.isVisible = false
-            logInItem.isVisible = true
-        }
-        else {
-            logInItem.isVisible = false
-            logOutItem.isVisible = true
+
+        showHideLoggedInButtons()
+    }
+
+    override fun onPostResume() {
+        super.onPostResume()
+        showHideLoggedInButtons()
+    }
+
+
+    private val onBackStackChanged =  {
+        val currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
+        when (currentFragment) {
+            is StartWorkoutFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
+            is HistoryFragment -> nav_view.setCheckedItem(R.id.nav_history)
+            is LeaderBoardFragment -> nav_view.setCheckedItem(R.id.nav_leader_board)
+            is SettingsFragment -> nav_view.setCheckedItem(R.id.nav_settings)
         }
 
+        if (currentFragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
+        else fab.visibility = View.GONE
+    }
+
+    private fun showHideLoggedInButtons() {
+        val currentUSer = FirebaseAuth.getInstance().currentUser
+        val logOutItem = nav_view.menu?.findItem(R.id.nav_log_out)
+        val logInItem = nav_view.menu?.findItem(R.id.nav_log_in)
+        val history = nav_view.menu?.findItem(R.id.nav_history)
+        val leaderboard = nav_view.menu?.findItem(R.id.nav_leader_board)
+        if (currentUSer == null){
+            logOutItem?.isVisible = false
+            logInItem?.isVisible = true
+            history?.isVisible = false
+            leaderboard?.isVisible = false
+        }
+        else {
+            logInItem?.isVisible = false
+            logOutItem?.isVisible = true
+            history?.isVisible = true
+            leaderboard?.isVisible = true
+        }
     }
 
     override fun onDestroy() {
@@ -120,6 +126,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         }
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         var fragment : Fragment
 
@@ -136,8 +143,31 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             R.id.nav_settings -> {
                 fragment = SettingsFragment()
             }
+            R.id.nav_log_out -> {
+                val act  = this;
+                AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener{
+                            act.startActivity(
+                                    Intent(act, LoginPromptActivity::class.java)
+                            )
+                        }
+                return true
+            }
+            R.id.nav_log_in -> {
+                this.startActivityForResult(
+                        AuthUI.getInstance()
+                                .createSignInIntentBuilder()
+                                .setAvailableProviders(providers)
+                                .setLogo(R.drawable.icon_white)
+                                .setTheme(R.style.CustomFirebaseUITheme)
+                                .build(),
+                        RC_SIGN_IN
+                )
+                return true
+            }
             else -> {
-                fragment = StartWorkoutFragment() //OJO CON ESTO
+                return false
             }
         }
 
@@ -157,7 +187,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     fun selectFragment(fragment:Fragment){
         val ft = supportFragmentManager?.beginTransaction()
-        ft?.replace(R.id.content_frame, fragment, "visible_fragment")
+        ft?.replace(R.id.drawer_menu_fragment_holder, fragment, "visible_fragment")
         ft?.addToBackStack(null)
         ft?.commit()
         if (fragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
