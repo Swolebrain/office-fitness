@@ -24,6 +24,13 @@ class LoginPromptActivity : AppCompatActivity() {
         //handle user already logged in
         val user = FirebaseAuth.getInstance().currentUser
         if (user != null){
+            for (prop in user::class.java.fields){
+                Log.d("####", "${prop.name}: ${prop.get(user)}")
+            }
+            Log.d("####", user.uid)
+            Log.d("####", user.displayName)
+            Log.d("####", user.email)
+            Log.d("####", user.getIdToken(true).toString())
             startActivity(
                     Intent(this, DrawerMenuActivity::class.java)
             )
@@ -45,7 +52,7 @@ class LoginPromptActivity : AppCompatActivity() {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
-                        .setLogo(R.drawable.icon_white)
+                        .setLogo(R.drawable.hex_icon_256)
                         .setTheme(R.style.CustomFirebaseUITheme)
                         .build(),
                 RC_SIGN_IN
@@ -73,3 +80,5 @@ class LoginPromptActivity : AppCompatActivity() {
         startActivity(Intent(this, DrawerMenuActivity::class.java))
     }
 }
+
+

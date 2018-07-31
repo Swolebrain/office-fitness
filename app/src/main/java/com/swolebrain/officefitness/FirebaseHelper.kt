@@ -12,10 +12,9 @@ import com.swolebrain.officefitness.repositories.loadWorkoutLogs
 
 const val RC_SIGN_IN : Int = 123
 val providers = listOf(
+        AuthUI.IdpConfig.FacebookBuilder().setPermissions(mutableListOf("email", "public_profile")).build(),
+        AuthUI.IdpConfig.GoogleBuilder().build(),
         AuthUI.IdpConfig.EmailBuilder().build()
-//            AuthUI.IdpConfig.PhoneBuilder().build(),
-//            AuthUI.IdpConfig.GoogleBuilder().build(),
-//            AuthUI.IdpConfig.FacebookBuilder().build(),
 //            AuthUI.IdpConfig.TwitterBuilder().build(),
 )
 

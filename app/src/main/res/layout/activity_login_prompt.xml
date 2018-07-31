@@ -10,7 +10,7 @@
     android:background="@drawable/home_bg_gradient">
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
+        android:id="@+id/vert_guideline"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -32,7 +32,7 @@
 
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/guideline"
+        app:layout_constraintEnd_toStartOf="@id/vert_guideline"
         android:src="@drawable/home_alfombra"
         android:adjustViewBounds="true"
         android:maxWidth="180dp"
@@ -42,7 +42,7 @@
 
     <ImageView
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/guideline"
+        app:layout_constraintStart_toEndOf="@id/vert_guideline"
         android:src="@drawable/home_matera"
         android:adjustViewBounds="true"
         android:maxWidth="70dp"
@@ -74,7 +74,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+        android:maxWidth="150dp"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/hex_icon_256" />
 
     <TextView
         android:id="@+id/tv_app_name"
@@ -121,38 +123,42 @@
         android:fontFamily="@font/nunito_regular"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/btn_log_in"
+        app:layout_constraintBottom_toTopOf="@id/bottom_hrz_guide"
         />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/bottom_hrz_guide"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.85"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/btn_log_in"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_margin="16dp"
         android:textColor="@color/OFT_cream"
         android:fontFamily="@font/nunito_regular"
         android:text="@string/btn_log_in"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/vert_guideline"
         android:background="@color/light_green"
-        app:layout_constraintBottom_toTopOf="@id/btn_start_workout" />
+        />
 
     <Button
         android:id="@+id/btn_start_workout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_margin="16dp"
         android:fontFamily="@font/nunito_regular"
-        android:layout_marginStart="8dp"
-        android:textColor="@color/OFT_cream"
         android:text="@string/btn_start_workout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="@color/OFT_cream"
+        style="@style/Base.Widget.AppCompat.Button.Borderless"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/fui_transparent"
-        />
+        app:layout_constraintEnd_toStartOf="@id/vert_guideline"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 

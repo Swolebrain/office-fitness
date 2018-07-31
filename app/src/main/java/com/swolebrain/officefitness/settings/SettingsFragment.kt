@@ -19,3 +19,9 @@ public class SettingsFragment : Fragment() {
         activity?.title = "Settings"
     }
 }
+
+//TODO: implement ability to specify "clan" name
+//TODO: big feature - badges
+//TODO: split up graphs by exercise type
+//TODO: settings page
+

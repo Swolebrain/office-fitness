@@ -33,18 +33,18 @@ public class StartWorkoutFragment : Fragment() {
         picker_select_exercise.maxValue = 4
         picker_select_exercise.displayedValues = exerciseNames.toTypedArray()
         //sync picker with data model
-        if (selectedEx.exerciseName.length > 0){
+        if (selectedEx.exerciseName.isNotEmpty()){
             picker_select_exercise.value =  exerciseNames.indexOf(selectedEx.exerciseName)
         }
         else {
             picker_select_exercise.value =  0
             ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[0]
         }
-        //value chnange listener
-        picker_select_exercise.setOnValueChangedListener({ np : NumberPicker, oldVal : Int, newVal : Int ->
+        //value channge listener
+        picker_select_exercise.setOnValueChangedListener{ np : NumberPicker, oldVal : Int, newVal : Int ->
             ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[newVal]
             Log.d("####PICKER CHANGED", ""+oldVal +" " +newVal + " - " + exerciseNames[newVal] + " - " + ExerciseViewModel.workoutConfig.exerciseName)
-        })
+        }
 
         //min value, max value, and labels
         picker_select_interval.minValue = 0
@@ -66,13 +66,13 @@ public class StartWorkoutFragment : Fragment() {
         }
 
         //value change listener
-        picker_select_interval.setOnValueChangedListener({ np : NumberPicker, oldVal : Int, newVal : Int ->
+        picker_select_interval.setOnValueChangedListener{ np : NumberPicker, oldVal : Int, newVal : Int ->
             val selectedKey : String = exerciseIntervals.keys.toTypedArray()[newVal]
             ExerciseViewModel.workoutConfig.timeInterval= when(exerciseIntervals[selectedKey]){
                 null -> 0
                 else -> exerciseIntervals[selectedKey] as Int
             }
-        })
+        }
 
         //min value, max value, and labels
         picker_select_reps.minValue = 0
@@ -87,18 +87,20 @@ public class StartWorkoutFragment : Fragment() {
             picker_select_reps.value = exerciseReps.map{it.toInt()}.indexOf(selectedEx.repetitions)
         }
 
-        picker_select_reps.setOnValueChangedListener({ np: NumberPicker, oldVal: Int, newVal: Int ->
+        picker_select_reps.setOnValueChangedListener{ np: NumberPicker, oldVal: Int, newVal: Int ->
             ExerciseViewModel.workoutConfig.repetitions = newVal + 1
-        })
+        }
     }
 
     companion object {
         val exerciseNames = listOf(
                 "Air Squats",
                 "Calf Raises",
-                "Burpees",
                 "Pushups",
-                "Other"
+                "Butt Kicks",
+                "High Knees",
+                "Chair Crunches",
+                "Burpees"
         )
 
         val exerciseIntervals = mapOf(
