@@ -10,6 +10,7 @@ import com.swolebrain.officefitness.DrawerMenuActivity
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
+import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 import kotlinx.android.synthetic.main.fragment_workout_progress.*
 
 /**
@@ -17,7 +18,8 @@ import kotlinx.android.synthetic.main.fragment_workout_progress.*
  */
 class WorkoutProgressFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+        val mainActivity : DrawerMenuActivity = activity as DrawerMenuActivity
+        mainActivity.toolbar.visibility = View.GONE
         return inflater.inflate(R.layout.fragment_workout_progress, container, false)
     }
 
@@ -39,5 +41,11 @@ class WorkoutProgressFragment : Fragment() {
         tv_timer.durationSeconds = ExerciseViewModel.workoutConfig.timeInterval
         activity?.title = ExerciseViewModel.workoutConfig.exerciseName
 
+    }
+
+    override fun onPause() {
+        val mainActivity : DrawerMenuActivity = activity as DrawerMenuActivity
+        mainActivity.toolbar.visibility = View.VISIBLE
+        super.onPause()
     }
 }

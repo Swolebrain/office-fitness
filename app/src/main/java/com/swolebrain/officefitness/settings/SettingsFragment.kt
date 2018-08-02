@@ -20,8 +20,17 @@ public class SettingsFragment : Fragment() {
     }
 }
 
-//TODO: implement ability to specify "clan" name
-//TODO: big feature - badges
-//TODO: split up graphs by exercise type
-//TODO: settings page
 
+//TODO: big feature - badges
+//TODO: settings page
+//TODO: gamification ideas: badges, competition against coworkers, levels for lifetime reps
+//TODO: #current reps with progress towards max(100, daily_avg) in a bar
+//TODO: rep progress towards next rank
+//TODO: signal to user that workout starts by resting
+//TODO: home screen
+
+//TODO: feed of recent workouts in history page
+//TODO: delete workout from feed
+
+//TODO: button to skip rest period
+//TODO: implement ability to specify "clan" name

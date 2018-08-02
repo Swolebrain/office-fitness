@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.swolebrain.officefitness.DrawerMenuActivity
 import com.swolebrain.officefitness.R
-import com.swolebrain.officefitness.workout.StartWorkoutFragment
+import com.swolebrain.officefitness.workout.WorkoutConfigurationFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 
 /**
@@ -25,7 +25,7 @@ public class HomeFragment : Fragment() {
 //            mainActivity.startLogin()
         }
         btn_start_workout.setOnClickListener{
-            mainActivity.selectFragment(StartWorkoutFragment())
+            mainActivity.selectFragment(WorkoutConfigurationFragment())
         }
     }
 }

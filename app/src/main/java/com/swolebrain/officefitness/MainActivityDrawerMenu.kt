@@ -17,7 +17,7 @@ import com.swolebrain.officefitness.leaderboard.LeaderBoardFragment
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
 import com.swolebrain.officefitness.settings.SettingsFragment
-import com.swolebrain.officefitness.workout.StartWorkoutFragment
+import com.swolebrain.officefitness.workout.WorkoutConfigurationFragment
 import com.swolebrain.officefitness.workout.WorkoutProgressFragment
 import kotlinx.android.synthetic.main.activity_drawer_menu.*
 import kotlinx.android.synthetic.main.fragment_start_workout.*
@@ -53,7 +53,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         supportFragmentManager?.addOnBackStackChangedListener(onBackStackChanged)
 
-        selectFragment(StartWorkoutFragment())
+        selectFragment(WorkoutConfigurationFragment())
 
         showHideLoggedInButtons()
     }
@@ -67,13 +67,13 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private val onBackStackChanged =  {
         val currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
         when (currentFragment) {
-            is StartWorkoutFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
+            is WorkoutConfigurationFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
             is HistoryFragment -> nav_view.setCheckedItem(R.id.nav_history)
             is LeaderBoardFragment -> nav_view.setCheckedItem(R.id.nav_leader_board)
             is SettingsFragment -> nav_view.setCheckedItem(R.id.nav_settings)
         }
 
-        if (currentFragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
+        if (currentFragment is WorkoutConfigurationFragment) fab.visibility = View.VISIBLE
         else fab.visibility = View.GONE
     }
 
@@ -132,7 +132,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         when (item.itemId) {
             R.id.nav_start_workout -> {
-                fragment = StartWorkoutFragment()
+                fragment = WorkoutConfigurationFragment()
             }
             R.id.nav_history -> {
                 fragment = HistoryFragment()
@@ -181,7 +181,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         WorkoutProgressViewModel.workoutProgress.startTime = System.currentTimeMillis()
         WorkoutProgressViewModel.workoutProgress.repsCompleted = 0
         WorkoutProgressViewModel.workoutProgress.setsCompleted = 0
-        Log.d("vic-LAUNCHING WORKOUT", StartWorkoutFragment.exerciseNames[picker_select_exercise.value])
+        Log.d("vic-LAUNCHING WORKOUT", WorkoutConfigurationFragment.exerciseNames[picker_select_exercise.value])
         selectFragment(WorkoutProgressFragment())
     }
 
@@ -190,7 +190,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         ft?.replace(R.id.drawer_menu_fragment_holder, fragment, "visible_fragment")
         ft?.addToBackStack(null)
         ft?.commit()
-        if (fragment is StartWorkoutFragment) fab.visibility = View.VISIBLE
+        if (fragment is WorkoutConfigurationFragment) fab.visibility = View.VISIBLE
         else fab.visibility = View.GONE
     }
 

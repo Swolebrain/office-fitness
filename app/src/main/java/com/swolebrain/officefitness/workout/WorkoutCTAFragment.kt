@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import com.swolebrain.officefitness.DrawerMenuActivity
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
+import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 import kotlinx.android.synthetic.main.fragment_workout_cta.*
 
 /**
@@ -28,7 +29,14 @@ class WorkoutCTAFragment : Fragment() {
     private val vibrationAmplitudes : IntArray = intArrayOf(0, 255, 0, 255, 0, 255, 0)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val mainActivity : DrawerMenuActivity = activity as DrawerMenuActivity
+        mainActivity.toolbar.visibility = View.GONE
         return inflater.inflate(R.layout.fragment_workout_cta, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,6 +73,8 @@ class WorkoutCTAFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        val mainActivity : DrawerMenuActivity = activity as DrawerMenuActivity
+        mainActivity.toolbar.visibility = View.GONE
         gradientAnimation?.stop()
         endVibration()
     }
