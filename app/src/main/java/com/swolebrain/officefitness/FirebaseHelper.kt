@@ -1,11 +1,11 @@
 package com.swolebrain.officefitness
 
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v4.app.Fragment
 import android.util.Log
 import com.firebase.ui.auth.AuthUI
+import com.google.android.gms.common.Scopes
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.swolebrain.officefitness.history.getUTCTime7DaysAgo
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
 import com.swolebrain.officefitness.repositories.loadWorkoutLogs
@@ -13,7 +13,7 @@ import com.swolebrain.officefitness.repositories.loadWorkoutLogs
 const val RC_SIGN_IN : Int = 123
 val providers = listOf(
         AuthUI.IdpConfig.FacebookBuilder().setPermissions(mutableListOf("email", "public_profile")).build(),
-        AuthUI.IdpConfig.GoogleBuilder().build(),
+        AuthUI.IdpConfig.GoogleBuilder().setScopes(listOf(Scopes.PROFILE)).build(),
         AuthUI.IdpConfig.EmailBuilder().build()
 //            AuthUI.IdpConfig.TwitterBuilder().build(),
 )
@@ -46,7 +46,7 @@ fun getLast7DaysWorkout(){
             .document(currentUserAuth.uid)
             .collection("workoutlogs")
 
-    workoutLogsRef.whereGreaterThanOrEqualTo("timestamp", System.currentTimeMillis() - 7 * 24 * 60 *60 * 1000)
+    workoutLogsRef.whereGreaterThanOrEqualTo("timestamp", getUTCTime7DaysAgo())
             .get()
             .addOnCompleteListener{
                 if (!it.isSuccessful){

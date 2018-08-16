@@ -1,12 +1,9 @@
 package com.swolebrain.officefitness.workout
 
-import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Canvas
-import android.support.v7.app.AppCompatActivity
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.TextView
 import com.swolebrain.officefitness.DrawerMenuActivity
 

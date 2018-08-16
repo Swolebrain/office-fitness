@@ -160,7 +160,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
                                 .setLogo(R.drawable.icon_white)
-                                .setTheme(R.style.CustomFirebaseUITheme)
+                                .setTheme(R.style.NunitoTheme)
                                 .build(),
                         RC_SIGN_IN
                 )
@@ -181,7 +181,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         WorkoutProgressViewModel.workoutProgress.startTime = System.currentTimeMillis()
         WorkoutProgressViewModel.workoutProgress.repsCompleted = 0
         WorkoutProgressViewModel.workoutProgress.setsCompleted = 0
-        Log.d("vic-LAUNCHING WORKOUT", WorkoutConfigurationFragment.exerciseNames[picker_select_exercise.value])
+        Log.d("vic-LAUNCHING WORKOUT", ExerciseViewModel.exerciseNames[picker_select_exercise.value])
         selectFragment(WorkoutProgressFragment())
     }
 

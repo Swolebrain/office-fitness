@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import android.widget.NumberPicker
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
+import com.swolebrain.officefitness.repositories.ExerciseViewModel.Companion.exerciseIntervals
+import com.swolebrain.officefitness.repositories.ExerciseViewModel.Companion.exerciseNames
+import com.swolebrain.officefitness.repositories.ExerciseViewModel.Companion.exerciseReps
 import kotlinx.android.synthetic.main.fragment_start_workout.*
 
 
@@ -27,10 +30,11 @@ public class WorkoutConfigurationFragment : Fragment() {
     }
 
     fun configurePickers() {
-        val selectedEx = ExerciseViewModel.workoutConfig;
+        val selectedEx = ExerciseViewModel.workoutConfig
+        //EXERCISE PICKER
         //min value, max value, and labels
         picker_select_exercise.minValue = 0
-        picker_select_exercise.maxValue = 4
+        picker_select_exercise.maxValue = ExerciseViewModel.exerciseNames.size -1
         picker_select_exercise.displayedValues = exerciseNames.toTypedArray()
         //sync picker with data model
         if (selectedEx.exerciseName.isNotEmpty()){
@@ -41,11 +45,12 @@ public class WorkoutConfigurationFragment : Fragment() {
             ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[0]
         }
         //value channge listener
-        picker_select_exercise.setOnValueChangedListener{ np : NumberPicker, oldVal : Int, newVal : Int ->
+        picker_select_exercise.setOnValueChangedListener{ _: NumberPicker, _: Int, newVal : Int ->
             ExerciseViewModel.workoutConfig.exerciseName = exerciseNames[newVal]
-            Log.d("####PICKER CHANGED", ""+oldVal +" " +newVal + " - " + exerciseNames[newVal] + " - " + ExerciseViewModel.workoutConfig.exerciseName)
+
         }
 
+        //TIME INTERVAL
         //min value, max value, and labels
         picker_select_interval.minValue = 0
         picker_select_interval.maxValue = 11
@@ -74,6 +79,7 @@ public class WorkoutConfigurationFragment : Fragment() {
             }
         }
 
+        //REP SELECTION
         //min value, max value, and labels
         picker_select_reps.minValue = 0
         picker_select_reps.maxValue = 19
@@ -90,25 +96,5 @@ public class WorkoutConfigurationFragment : Fragment() {
         picker_select_reps.setOnValueChangedListener{ np: NumberPicker, oldVal: Int, newVal: Int ->
             ExerciseViewModel.workoutConfig.repetitions = newVal + 1
         }
-    }
-
-    companion object {
-        val exerciseNames = listOf(
-                "Air Squats",
-                "Calf Raises",
-                "Pushups",
-                "Butt Kicks",
-                "High Knees",
-                "Chair Crunches",
-                "Burpees"
-        )
-
-        val exerciseIntervals = mapOf(
-                "10s" to 10, "20s" to 20, "30s" to 30, "40s" to 40, "50s" to 50, "60s" to 60,
-                "1.5min" to 90, "2min" to 120, "2.5min" to 150, "3min" to 180, "3.5min" to 210,
-                "4min" to 240, "4.5min" to 270, "5min" to 300
-        )
-
-        val exerciseReps = IntRange(1,20).map{ it.toString() }
     }
 }

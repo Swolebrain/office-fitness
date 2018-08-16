@@ -7,15 +7,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
 import android.os.Vibrator
-import android.provider.MediaStore
 import android.support.annotation.RequiresApi
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.swolebrain.officefitness.DrawerMenuActivity
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
+import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
 import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 import kotlinx.android.synthetic.main.fragment_workout_cta.*
 
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_workout_cta.*
  */
 class WorkoutCTAFragment : Fragment() {
     private lateinit var gradientAnimation : AnimationDrawable
+    private lateinit var exerciseInstructionAnimation : AnimationDrawable
     private lateinit var vibrator : Vibrator
     private val vibratorPattern: LongArray = longArrayOf(0L, 200L, 200L, 200L, 200L, 800L, 400L)
     private val vibrationAmplitudes : IntArray = intArrayOf(0, 255, 0, 255, 0, 255, 0)
@@ -45,10 +47,10 @@ class WorkoutCTAFragment : Fragment() {
         val mainActivity = activity as DrawerMenuActivity
 
         btn_skip_set.setOnClickListener {e ->
-            mainActivity?.selectFragment(WorkoutProgressFragment())
+            mainActivity.selectFragment(WorkoutProgressFragment())
         }
         btn_reps_done.setOnClickListener { e ->
-            mainActivity?.recordCompletedSet()
+            mainActivity.recordCompletedSet()
         }
 
         gradientAnimation = this.container_workout_cta.background as AnimationDrawable
@@ -56,6 +58,20 @@ class WorkoutCTAFragment : Fragment() {
         gradientAnimation.setExitFadeDuration(400)
 
         vibrator = mainActivity.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+//        Log.d("####", "Resource ID: " + ExerciseViewModel.workoutConfig.exerciseAnimationResource!! + " - should be: " + R.drawable.anim_squat_male + " - exercise: " + ExerciseViewModel.workoutConfig.exerciseName)
+        val selectedExerciseAnimation = ExerciseViewModel.workoutConfig.exerciseAnimationResource!!
+        if (selectedExerciseAnimation == -1){
+            iv_exercise_instruction_animation.visibility = View.GONE
+        }
+        else {
+            exerciseInstructionAnimation = ContextCompat.getDrawable(mainActivity, selectedExerciseAnimation) as AnimationDrawable
+            iv_exercise_instruction_animation.setImageDrawable(exerciseInstructionAnimation)
+            iv_exercise_instruction_animation.post{
+                exerciseInstructionAnimation.start()
+            }
+            iv_exercise_instruction_animation.visibility = View.VISIBLE
+        }
     }
 
 
@@ -63,18 +79,20 @@ class WorkoutCTAFragment : Fragment() {
         super.onResume()
         val act = activity as DrawerMenuActivity
         if (act != null) act.title = ""
-        tv_reps_reminder.text = "Reps: " + ExerciseViewModel.workoutConfig.repetitions
+        tv_reps_reminder.text = "" + ExerciseViewModel.workoutConfig.repetitions + " reps"
         tv_workout_cta.text = ExerciseViewModel.workoutConfig.exerciseName
         tv_reps_reminder.invalidate()
         tv_workout_cta.invalidate()
         gradientAnimation?.start()
         startVibration()
+        tv_current_set_num.text = "SET " + (WorkoutProgressViewModel.workoutProgress.setsCompleted + 1)
     }
 
     override fun onPause() {
         super.onPause()
         val mainActivity : DrawerMenuActivity = activity as DrawerMenuActivity
         mainActivity.toolbar.visibility = View.GONE
+        if (::exerciseInstructionAnimation.isInitialized) exerciseInstructionAnimation?.stop()
         gradientAnimation?.stop()
         endVibration()
     }

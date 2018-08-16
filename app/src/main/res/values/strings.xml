@@ -19,4 +19,7 @@
     <string name="btn_start_workout">Start Workout</string>
     <string name="welcome_text">Welcome to office fitness! You must log in if you want your workouts to be tracked over time. Otherwise, You can simply start a new workout.</string>
     <string name="app_tagline">Keep in shape while you work</string>
+    <string name="x">sets, total reps: </string>
+    <string name="label_history_recent_workouts">Your Recent Workouts</string>
+    <string name="label_rest_instruction">Use your rest period to get into the flow of your work, or press the Skip button to start your exercise right now.</string>
 </resources>

@@ -29,7 +29,7 @@ public class SettingsFragment : Fragment() {
 //TODO: signal to user that workout starts by resting
 //TODO: home screen
 
-//TODO: feed of recent workouts in history page
+//TODO: style feed of recent workouts in history page
 //TODO: delete workout from feed
 
 //TODO: button to skip rest period

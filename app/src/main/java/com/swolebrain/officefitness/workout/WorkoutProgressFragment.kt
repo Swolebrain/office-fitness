@@ -25,9 +25,13 @@ class WorkoutProgressFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btn_finish_workout.setOnClickListener { e ->
+        btn_finish_workout.setOnClickListener {
             val drawerActivity = activity as DrawerMenuActivity
             drawerActivity?.selectFragment(WorkoutResultsFragment())
+        }
+        btn_skip_rest.setOnClickListener {
+            val drawerActivity = activity as DrawerMenuActivity
+            drawerActivity?.selectFragment(WorkoutCTAFragment())
         }
     }
 

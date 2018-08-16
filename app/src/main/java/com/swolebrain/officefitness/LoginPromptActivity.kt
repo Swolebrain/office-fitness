@@ -53,7 +53,7 @@ class LoginPromptActivity : AppCompatActivity() {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setLogo(R.drawable.hex_icon_256)
-                        .setTheme(R.style.CustomFirebaseUITheme)
+                        .setTheme(R.style.NunitoTheme)
                         .build(),
                 RC_SIGN_IN
         )

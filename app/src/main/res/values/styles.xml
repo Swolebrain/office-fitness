@@ -24,7 +24,7 @@
         <item name="android:windowBackground">@drawable/splash_theme_bg</item>
     </style>
 
-    <style name="CustomFirebaseUITheme" parent="ThemeOverlay.AppCompat.Dark">
+    <style name="NunitoTheme" parent="ThemeOverlay.AppCompat.Dark">
         <item name="colorPrimary">@color/deep_purple</item>
         <item name="colorPrimaryDark">@color/deep_purple</item>
         <item name="colorAccent">@color/light_green</item>
