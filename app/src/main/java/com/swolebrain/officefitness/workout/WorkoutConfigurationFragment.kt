@@ -53,8 +53,9 @@ public class WorkoutConfigurationFragment : Fragment() {
         //TIME INTERVAL
         //min value, max value, and labels
         picker_select_interval.minValue = 0
-        picker_select_interval.maxValue = 11
-        picker_select_interval.displayedValues = exerciseIntervals.keys.toTypedArray()
+        val timeIntervalLabels = exerciseIntervals.keys.toTypedArray()
+        picker_select_interval.maxValue = timeIntervalLabels.size - 1
+        picker_select_interval.displayedValues = timeIntervalLabels
         //sync picker with data model
         val previousSelectedInterval : Int = ExerciseViewModel.workoutConfig.timeInterval
         when(previousSelectedInterval){

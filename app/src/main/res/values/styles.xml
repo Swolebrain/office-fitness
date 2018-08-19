@@ -1,13 +1,15 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="android:fontFamily">@font/nunito</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPurple_A400</item>
+        <item name="colorPrimaryDark">@color/colorPurple_900</item>
+        <item name="colorAccent">@color/light_green</item>
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:colorButtonNormal">@color/light_green</item>
+        <item name="android:textAppearanceButton">@style/NunitoButton</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -31,6 +33,15 @@
         <item name="android:windowBackground">@color/light_purple</item>
         <item name="android:textColor">@color/OFT_cream</item>
         <item name="android:fontFamily">@font/nunito</item>
+        <item name="android:colorButtonNormal">@color/light_green</item>
+        <item name="android:textAppearanceButton">@style/NunitoButton</item>
+    </style>
+
+
+    <style name="NunitoButton">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/OFT_cream</item>
     </style>
 
 </resources>

@@ -11,9 +11,9 @@
     <string name="facebook_application_id" translatable="false">2084529734891786</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb2084529734891786</string>
     <string name="label_exercise_type">Exercise:</string>
-    <string name="label_reps_performed">Reps Performed:</string>
+    <string name="label_reps_performed">Reps:</string>
     <string name="label_time_elapsed">Time Elapsed</string>
-    <string name="label_sets_performed">Sets Performed</string>
+    <string name="label_sets_performed">Sets:</string>
     <string name="dashes">--</string>
     <string name="btn_log_in">Log In</string>
     <string name="btn_start_workout">Start Workout</string>
@@ -22,4 +22,8 @@
     <string name="x">sets, total reps: </string>
     <string name="label_history_recent_workouts">Your Recent Workouts</string>
     <string name="label_rest_instruction">Use your rest period to get into the flow of your work, or press the Skip button to start your exercise right now.</string>
+    <string name="label_start_new_workout">Start New Workout</string>
+    <string name="settings_label_avatar">Avatar</string>
+    <string name="label_start_wo">Select Exercise</string>
+    <string name="settings_label_clan">Clans</string>
 </resources>

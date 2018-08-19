@@ -8,7 +8,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.swolebrain.officefitness.history.getUTCTime7DaysAgo
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
+import com.swolebrain.officefitness.repositories.loadUserProfileData
 import com.swolebrain.officefitness.repositories.loadWorkoutLogs
+
 
 const val RC_SIGN_IN : Int = 123
 val providers = listOf(
@@ -18,6 +20,9 @@ val providers = listOf(
 //            AuthUI.IdpConfig.TwitterBuilder().build(),
 )
 
+/**
+ * WORKOUT LOGS
+ */
 fun recordCompletedWorkout(secondsElapsed: Long){
     val currentUserAuth = FirebaseAuth.getInstance().currentUser
     val db = FirebaseFirestore.getInstance()
@@ -57,4 +62,36 @@ fun getLast7DaysWorkout(){
                 loadWorkoutLogs(it.result)
 
             }
+}
+
+/**
+ *  PROFILE
+ */
+fun saveProfileValue(fieldName:String, value:String){
+    val currentUserAuth = FirebaseAuth.getInstance().currentUser
+    val db = FirebaseFirestore.getInstance()
+    if (db == null || currentUserAuth == null) return
+    Log.d("####", "Saving profile value ${fieldName}...")
+
+    val userRef = db.collection("users")
+            .document(currentUserAuth.uid)
+
+    userRef.update(fieldName, value).addOnSuccessListener { Log.d("####", "Data written to firebase - ${fieldName} : ${value}") }
+}
+
+
+fun loadProfileDataFromFireBase(){
+    val currentUserAuth = FirebaseAuth.getInstance().currentUser
+    val db = FirebaseFirestore.getInstance()
+    if (db == null || currentUserAuth == null) return
+    val userRef = db.collection("users")
+            .document(currentUserAuth.uid)
+
+    userRef.get().addOnCompleteListener {
+        if (!it.isSuccessful){
+            Log.d("####", "Error retrieving firebase profile")
+            return@addOnCompleteListener
+        }
+        loadUserProfileData(it.result )
+    }
 }

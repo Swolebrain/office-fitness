@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 22.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 88 80" style="enable-background:new 0 0 88 80;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#7B4CB6;}
+	.st1{fill:#3D2F7A;}
+	.st2{fill:#FFA800;}
+	.st3{fill:#DD830B;}
+	.st4{fill:#FFC585;}
+</style>
+<g>
+	<polygon class="st0" points="44.2,48.1 1,0 1,15 44.2,61 	"/>
+	<path class="st1" d="M1,15v2.2c0,1.5,0.6,2.9,1.6,4l41.6,46.4V61L1,15z"/>
+	<polygon class="st0" points="87.1,0 43.9,48.1 43.9,60.6 87.1,14.8 	"/>
+	<path class="st1" d="M43.9,60.6v6.9l41.6-46.3c1-1.1,1.6-2.5,1.6-4v-2.4L43.9,60.6z"/>
+	<circle class="st2" cx="44" cy="54.3" r="23.8"/>
+	<path class="st3" d="M56.7,34.1l-29.5,37c9.2,9.4,24.3,9.5,33.7,0.2s9.5-24.3,0.2-33.7C59.8,36.3,58.3,35.1,56.7,34.1z"/>
+	<circle class="st4" cx="44" cy="54.3" r="15.9"/>
+</g>
+</svg>

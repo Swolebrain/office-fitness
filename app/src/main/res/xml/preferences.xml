@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<PreferenceCategory
+    android:title="Avatar">
+    <EditTextPreference
+        android:key="preference_display_name"
+        android:title="Display Name"
+        android:summary="Enter a Display Name"/>
+</PreferenceCategory>
+
+<PreferenceCategory
+    android:title="Clans">
+    <EditTextPreference
+        android:key="preference_display_name"
+        android:title="Display Name"
+        android:summary="Enter a Display Name"/>
+</PreferenceCategory>
+
+</PreferenceScreen>
