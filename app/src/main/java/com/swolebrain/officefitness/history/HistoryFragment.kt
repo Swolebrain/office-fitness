@@ -12,6 +12,8 @@ import com.google.firebase.firestore.QuerySnapshot
 import com.jjoe64.graphview.series.DataPoint
 import com.swolebrain.officefitness.DrawerMenuActivity
 import com.swolebrain.officefitness.R
+import com.swolebrain.officefitness.common.getGMTOffset
+import com.swolebrain.officefitness.common.getUTCMidnightTimeMillis
 import com.swolebrain.officefitness.getLast7DaysWorkout
 import com.swolebrain.officefitness.repositories.WorkoutLog
 import com.swolebrain.officefitness.repositories.getWorkoutLogs
@@ -82,7 +84,7 @@ class HistoryFragment : Fragment() {
         if (dataPoints.size > 0) reset()
         querySnapshot?.forEach workoutLoop@{
             val timeStampGMT =  it.get("timestamp") as Long
-            val log = WorkoutLog(it.get("durationSeconds") as Long, it.get("exercise") as String, it.get("reps") as Long, it.get("sets") as Long, timeStampGMT)
+            val log = WorkoutLog(it.get("durationSeconds") as Long, it.get("exercise") as String, it.get("reps") as Long, it.get("sets") as Long, timeStampGMT, it.id)
             totalActivitySeconds += log.durationSeconds
             totalReps += log.reps
             var numDaysAgo : Long = (tonightMidnightTime - log.timeStamp) / (1000L*60*60*24)

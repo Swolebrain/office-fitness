@@ -1,7 +1,10 @@
 package com.swolebrain.officefitness.history
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +18,9 @@ import kotlinx.android.synthetic.main.fragment_history_rv_graph.view.*
 import kotlinx.android.synthetic.main.fragment_history_rv_workout_row.view.*
 import kotlinx.android.synthetic.main.fragment_history_rvline1.view.*
 import java.util.*
+import com.swolebrain.officefitness.common.historyFormatDate
+import com.swolebrain.officefitness.deleteWorkoutById
+
 
 /*
     IMPORTANT: LIST IS OFFSET BY 2, MISSING THE FIRST 2 ELEMENTS
@@ -55,7 +61,8 @@ class HistoryRVAdapter(private val c: Context, private val workoutLogs: MutableL
                     inflater.inflate(R.layout.fragment_history_rv_workout_title, parent, false)
             )
             VIEW_TYPE_WORKOUT_ENTRY -> return WorkoutItemViewHolder(
-                    inflater.inflate(R.layout.fragment_history_rv_workout_row, parent, false)
+                    inflater.inflate(R.layout.fragment_history_rv_workout_row, parent, false),
+                    c
             )
             else -> throw InstantiationException("Incorrect View Type")
         }
@@ -82,10 +89,7 @@ class HistoryRVAdapter(private val c: Context, private val workoutLogs: MutableL
                 }
                 is WorkoutItemViewHolder -> {
                     val log : WorkoutLog = workoutLogs[workoutLogs.size - 1 - position + logOffset]
-                    history_tv_exercise_name.text = log.exercise
-                    history_tv_reps.text = log.reps.toString()
-                    history_tv_sets.text = log.sets.toString()
-                    history_tv_exercise_date.text = historyFormatDate(log.timeStamp)
+                    holder.bind(log)
                 }
             }
 
@@ -109,7 +113,34 @@ class HistoryRVAdapter(private val c: Context, private val workoutLogs: MutableL
     class TextWidgetViewHolder(v: View) : BaseViewHolder(v)
     class GraphViewHolder(v: View) : BaseViewHolder(v)
     class WorkoutHeaderViewHolder(v: View) : BaseViewHolder(v)
-    class WorkoutItemViewHolder(v: View) : BaseViewHolder(v)
+    class WorkoutItemViewHolder(v: View, val c: Context) : BaseViewHolder(v){
+        private lateinit var currentItem: WorkoutLog
+        init {
+            itemView.setOnLongClickListener{ v ->
+                Log.d("####", "GONNA DELETE WORKOUT ${currentItem.toString()} ")
+                AlertDialog.Builder(c)
+                    .setTitle("Confirm Delete")
+                    .setMessage("Do you really want to delete this workout?")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+                        Log.d("####", "GONNA DELETE WORKOUT ${currentItem.toString()} ")
+                        deleteWorkoutById(currentItem.id)
+                    } )
+                    .create().show()
+                return@setOnLongClickListener true
+            }
+
+        }
+        fun bind(workoutLog: WorkoutLog){
+            currentItem = workoutLog
+            with (itemView){
+                history_tv_exercise_name.text = workoutLog.exercise
+                history_tv_reps.text = workoutLog.reps.toString()
+                history_tv_sets.text = workoutLog.sets.toString()
+                history_tv_exercise_date.text = historyFormatDate(workoutLog.timeStamp)
+            }
+        }
+    }
 }
 
 class WeekGraphLabelFormatter : DefaultLabelFormatter(){

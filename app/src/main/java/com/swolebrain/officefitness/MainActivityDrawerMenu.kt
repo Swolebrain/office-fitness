@@ -1,5 +1,6 @@
 package com.swolebrain.officefitness
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.PixelFormat
 import android.os.Bundle
@@ -14,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import com.swolebrain.officefitness.history.HistoryFragment
 import com.swolebrain.officefitness.leaderboard.LeaderBoardFragment
+import com.swolebrain.officefitness.dashboard.DashboardFragment
 import com.swolebrain.officefitness.repositories.ExerciseViewModel
 import com.swolebrain.officefitness.repositories.WorkoutProgressViewModel
 import com.swolebrain.officefitness.settings.SettingsFragment
@@ -38,8 +40,6 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Launching workout...", Snackbar.LENGTH_LONG)
-//                    .setAction("Action", null).show()
             launchWorkout()
         }
 
@@ -53,7 +53,7 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
         supportFragmentManager?.addOnBackStackChangedListener(onBackStackChanged)
 
-        selectFragment(WorkoutConfigurationFragment())
+        pickCurrentFragment()
 
         showHideLoggedInButtons()
     }
@@ -63,10 +63,17 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         showHideLoggedInButtons()
     }
 
+    private fun pickCurrentFragment(){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser == null) selectFragment(WorkoutConfigurationFragment())
+        else selectFragment(DashboardFragment())
+    }
+
 
     private val onBackStackChanged =  {
         val currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
         when (currentFragment) {
+            is DashboardFragment -> nav_view.setCheckedItem(R.id.nav_dashboard)
             is WorkoutConfigurationFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
             is HistoryFragment -> nav_view.setCheckedItem(R.id.nav_history)
             is LeaderBoardFragment -> nav_view.setCheckedItem(R.id.nav_leader_board)
@@ -78,22 +85,28 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     private fun showHideLoggedInButtons() {
-        val currentUSer = FirebaseAuth.getInstance().currentUser
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val dashboardItem = nav_view.menu?.findItem(R.id.nav_dashboard)
         val logOutItem = nav_view.menu?.findItem(R.id.nav_log_out)
         val logInItem = nav_view.menu?.findItem(R.id.nav_log_in)
         val history = nav_view.menu?.findItem(R.id.nav_history)
         val leaderboard = nav_view.menu?.findItem(R.id.nav_leader_board)
-        if (currentUSer == null){
+        val settings = nav_view.menu?.findItem(R.id.nav_settings)
+        if (currentUser == null){
+            dashboardItem?.isVisible = false
             logOutItem?.isVisible = false
             logInItem?.isVisible = true
             history?.isVisible = false
             leaderboard?.isVisible = false
+            settings?.isVisible = false
         }
         else {
+            dashboardItem?.isVisible = true
             logInItem?.isVisible = false
             logOutItem?.isVisible = true
             history?.isVisible = true
             leaderboard?.isVisible = true
+            settings?.isVisible = true
         }
     }
 
@@ -131,6 +144,9 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         var fragment : Fragment
 
         when (item.itemId) {
+            R.id.nav_dashboard -> {
+                fragment = DashboardFragment()
+            }
             R.id.nav_start_workout -> {
                 fragment = WorkoutConfigurationFragment()
             }
@@ -201,7 +217,6 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         WorkoutProgressViewModel.workoutProgress.setsCompleted += 1
         selectFragment(WorkoutProgressFragment())
     }
-
 
 
 

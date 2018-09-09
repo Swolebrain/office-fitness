@@ -4,20 +4,24 @@ import android.app.Fragment
 import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.swolebrain.officefitness.R
+import com.swolebrain.officefitness.loadProfileDataFromFireBase
 import com.swolebrain.officefitness.repositories.UserProfile
+import com.swolebrain.officefitness.repositories.loadUserProfileData
 import kotlinx.android.synthetic.main.fragment_settings_rv_clan_input.view.*
 import kotlinx.android.synthetic.main.fragment_settings_rv_clan_row.view.*
 import kotlinx.android.synthetic.main.fragment_settings_rv_display_name_select.view.*
 import kotlinx.android.synthetic.main.fragment_settings_rv_gender_select.view.*
 import kotlinx.android.synthetic.main.fragment_settings_rv_title.view.*
 
-class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment, var clans: List<String>) : RecyclerView.Adapter<SettingsRVAdapter.BaseSettingsViewHolder>(){
+class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : RecyclerView.Adapter<SettingsRVAdapter.BaseSettingsViewHolder>(){
     companion object {
         val TITLE_VIEW = 0
         val DISPLAY_NAME_SELECT_VIEW = 1
@@ -38,14 +42,20 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment, var clan
                     inflater.inflate(R.layout.fragment_settings_rv_gender_select, parent, false),
                     this.fragment
             )
-            CLAN_ROW_VIEW -> BaseSettingsViewHolder(inflater.inflate(R.layout.fragment_settings_rv_clan_row, parent, false))
-            CLAN_ENTRY_VIEW -> BaseSettingsViewHolder(inflater.inflate(R.layout.fragment_settings_rv_clan_input, parent, false))
+            CLAN_ROW_VIEW -> ClanRowViewHolder(
+                    inflater.inflate(R.layout.fragment_settings_rv_clan_row, parent, false),
+                    this.fragment
+            )
+            CLAN_ENTRY_VIEW -> JoinClanViewHolder(
+                    inflater.inflate(R.layout.fragment_settings_rv_clan_input, parent, false),
+                    this.fragment
+            )
             else -> throw IllegalArgumentException("Settings recyclerview got unexpected view type")
         }
     }
 
 
-    override fun getItemCount(): Int = 5 + clans.size
+    override fun getItemCount(): Int = if (::userProfile.isInitialized) userProfile.clansList.size + 5 else 5
 
     override fun onBindViewHolder(holder: BaseSettingsViewHolder, position: Int) {
         when (getItemViewType(position)){
@@ -68,16 +78,21 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment, var clan
                 }
             }
             CLAN_ROW_VIEW -> {
-                holder.itemView.tv_clan_name.text = "Clan Name Here"
+                if (::userProfile.isInitialized && userProfile.clansList.isNotEmpty()){
+                    holder.itemView.tv_clan_name.text = userProfile.clansList[position-4]
+                    if (!(holder as ClanRowViewHolder).isInitialized) holder.bindHandlers()
+                }
             }
             CLAN_ENTRY_VIEW -> {
-                holder.itemView.et_join_clan.setText("Triplebyte")
+                if (::userProfile.isInitialized){
+                    if (!(holder as JoinClanViewHolder).isInitialized) holder.bindHandlers()
+                }
             }
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        val lastClanEntryIndex:Int = 3 + clans.size
+        val lastClanEntryIndex:Int = if (::userProfile.isInitialized) userProfile.clansList.size + 3 else 3
         return when (position){
             0 -> TITLE_VIEW
             1 -> DISPLAY_NAME_SELECT_VIEW
@@ -117,6 +132,33 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment, var clan
             itemView.radio_male.setOnClickListener { fragment.commitChanges("gender", "male", null) }
             itemView.radio_female.setOnClickListener { fragment.commitChanges("gender", "female", null) }
             isInitialized = true
+        }
+    }
+
+    class JoinClanViewHolder(itemView: View, val fragment: SettingsFragment) : BaseSettingsViewHolder(itemView){
+        var isInitialized = false
+        var isSubmitting = false
+        fun bindHandlers(){
+            itemView.et_join_clan.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+            itemView.btn_join_clan.setOnClickListener {
+                if (isSubmitting) return@setOnClickListener
+                isSubmitting = true
+                Toast.makeText(fragment.activity, "It may take a minute for clan rankings to update", Toast.LENGTH_LONG)
+                fragment.commitChanges("clans", itemView.et_join_clan.text.toString(), "add")?.addOnSuccessListener {
+                    itemView.et_join_clan.setText("")
+                    isSubmitting = false
+                }
+            }
+            isInitialized = true
+        }
+    }
+
+    class ClanRowViewHolder(itemView: View, val fragment: SettingsFragment) : BaseSettingsViewHolder(itemView){
+        var isInitialized = false
+        fun bindHandlers(){
+            itemView.iv_leave_clan.setOnClickListener{
+                fragment.commitChanges("clans", itemView.tv_clan_name.text.toString(), "remove")
+            }
         }
     }
 }

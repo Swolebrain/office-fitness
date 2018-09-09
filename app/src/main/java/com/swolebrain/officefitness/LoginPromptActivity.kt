@@ -10,6 +10,7 @@ import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login_prompt.*
 import kotlinx.android.synthetic.main.drawer_menu_main_layout.*
 
@@ -31,6 +32,7 @@ class LoginPromptActivity : AppCompatActivity() {
             Log.d("####", user.displayName)
             Log.d("####", user.email)
             Log.d("####", user.getIdToken(true).toString())
+            saveUserData(user)
             startActivity(
                     Intent(this, DrawerMenuActivity::class.java)
             )
@@ -75,9 +77,17 @@ class LoginPromptActivity : AppCompatActivity() {
         }
 
         val user: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+        saveUserData(user)
         Log.d("####", user.email + " " + user.getIdToken(true))
 
         startActivity(Intent(this, DrawerMenuActivity::class.java))
+    }
+
+    private fun saveUserData(user: FirebaseUser){
+        FirebaseFirestore.getInstance().collection("users").document(user.uid).update(mutableMapOf(
+                "userName" to user.displayName as String,
+                "pictureUrl" to user.photoUrl.toString()
+        ) as Map<String, String>)
     }
 }
 

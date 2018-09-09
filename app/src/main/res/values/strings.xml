@@ -26,4 +26,5 @@
     <string name="settings_label_avatar">Avatar</string>
     <string name="label_start_wo">Select Exercise</string>
     <string name="settings_label_clan">Clans</string>
+    <string name="label_trophy_vector">Picture of a Trophy</string>
 </resources>

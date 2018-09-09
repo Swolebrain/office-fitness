@@ -4,21 +4,23 @@ import com.swolebrain.officefitness.R
 
 val animationsCorrespondingToExercisesMale = mapOf(
         "Air Squats" to R.drawable.anim_squat_male,
+        "Seated Squats" to R.drawable.anim_chair_squat_male,
         "Calf Raises" to R.drawable.anim_calf_raises_male,
         "Pushups" to R.drawable.anim_pushup_male,
-        "Butt Kicks" to -1,
-        "High Knees" to -1,
-        "Chair Crunches" to -1,
-        "Burpees" to -1
+        "Butt Kicks" to R.drawable.anim_butt_kicks_male,
+        "High Knees" to R.drawable.anim_high_knees_male,
+        "Chair Dips" to R.drawable.anim_chair_dips_male,
+        "Chair Crunches" to R.drawable.anim_chair_crunches_male
 )
 val animationsCorrespondingToExercisesFemale = mapOf(
         "Air Squats" to R.drawable.anim_squat_female,
+        "Seated Squats" to R.drawable.anim_chair_squat_female,
         "Calf Raises" to R.drawable.anim_calf_raises_female,
         "Pushups" to R.drawable.anim_pushup_female,
         "Butt Kicks" to R.drawable.anim_butt_kicks_female,
-        "High Knees" to -1,
-        "Chair Crunches" to -1,
-        "Burpees" to -1
+        "High Knees" to R.drawable.anim_high_knees_female,
+        "Chair Dips" to R.drawable.anim_chair_dips_female,
+        "Chair Crunches" to R.drawable.anim_chair_crunches_female
 )
 
 data class ExerciseViewModel(
@@ -43,12 +45,13 @@ data class ExerciseViewModel(
         private set
         val exerciseNames = listOf(
                 "Air Squats",
+                "Seated Squats",
                 "Calf Raises",
                 "Pushups",
                 "Butt Kicks",
                 "High Knees",
                 "Chair Crunches",
-                "Burpees"
+                "Chair Dips"
         )
 
         val exerciseIntervals = mapOf(

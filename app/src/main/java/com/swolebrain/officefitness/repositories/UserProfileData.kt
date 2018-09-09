@@ -9,6 +9,10 @@ private val userProfile : MutableLiveData<UserProfile> = MutableLiveData()
 fun getUserProfileData() = userProfile
 
 fun loadUserProfileData(userDoc:DocumentSnapshot){
+    userProfile.value = buildUserProfileFromDocument(userDoc)
+}
+
+fun buildUserProfileFromDocument(userDoc: DocumentSnapshot): UserProfile{
     var displayName = userDoc.get("displayName")
     if (displayName != null) displayName = displayName as String
     else displayName = ""
@@ -21,11 +25,29 @@ fun loadUserProfileData(userDoc:DocumentSnapshot){
     if (clans != null) clans = clans as List<String>
     else clans = listOf<String>()
 
-    userProfile.value = UserProfile(displayName, gender, clans)
+    var activityIndexLastUpdated = userDoc.get("activityIndexLastUpdated")
+    if (activityIndexLastUpdated != null) activityIndexLastUpdated = activityIndexLastUpdated as Long
+    else activityIndexLastUpdated = 0L
+
+    var allTimeActivity = userDoc.get("allTimeActivity")
+    allTimeActivity = when (allTimeActivity){
+        null -> 0
+        is Number -> allTimeActivity.toInt()
+        else -> throw Exception("Illegal parameter type for all time activity when reading from firebase")
+    }
+
+    var activityIndexHistory = userDoc.get("activityIndexHistory")
+    if (activityIndexHistory != null) activityIndexHistory = activityIndexHistory as List<Number>
+    else activityIndexHistory = listOf<Number>(0,0,0,0,0,0,0)
+
+    return UserProfile(displayName, gender, clans, activityIndexLastUpdated, allTimeActivity, activityIndexHistory)
 }
 
 data class UserProfile(
-        val displayName : String,
+        val displayName : String = "",
         val gender: String,
-        val clansList : List<String>
+        val clansList : List<String>,
+        val activityIndexLastUpdated: Long,
+        val allTimeActivity: Number,
+        val activityIndexHistory: List<Number> = listOf()
 )

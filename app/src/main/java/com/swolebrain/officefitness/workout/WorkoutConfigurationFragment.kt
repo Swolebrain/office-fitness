@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.fragment_start_workout.*
  * Created by marjv on 7/6/2018.
  */
 
-public class WorkoutConfigurationFragment : Fragment() {
+class WorkoutConfigurationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_start_workout, container, false)
 
