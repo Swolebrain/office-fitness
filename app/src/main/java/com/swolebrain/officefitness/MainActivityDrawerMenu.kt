@@ -62,16 +62,31 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         super.onPostResume()
         showHideLoggedInButtons()
     }
-
     private fun pickCurrentFragment(){
         val currentUser = FirebaseAuth.getInstance().currentUser
         if (currentUser == null) selectFragment(WorkoutConfigurationFragment())
         else selectFragment(DashboardFragment())
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        supportFragmentManager?.removeOnBackStackChangedListener(onBackStackChanged)
+    }
 
-    private val onBackStackChanged =  {
+    override fun onBackPressed() {
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawer(GravityCompat.START)
+        } else {
+            val stackCount = supportFragmentManager.backStackEntryCount
+            if (stackCount < 2) return
+            super.onBackPressed()
+        }
+    }
+
+    private val onBackStackChanged = onBackPressed@ {
         val currentFragment: Fragment = supportFragmentManager.findFragmentByTag("visible_fragment")
+                ?: return@onBackPressed
+
         when (currentFragment) {
             is DashboardFragment -> nav_view.setCheckedItem(R.id.nav_dashboard)
             is WorkoutConfigurationFragment -> nav_view.setCheckedItem(R.id.nav_start_workout)
@@ -107,19 +122,6 @@ class DrawerMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
             history?.isVisible = true
             leaderboard?.isVisible = true
             settings?.isVisible = true
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        supportFragmentManager?.removeOnBackStackChangedListener(onBackStackChanged)
-    }
-
-    override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
         }
     }
 

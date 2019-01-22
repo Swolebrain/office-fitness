@@ -152,7 +152,7 @@ fun loadLeaderBoards(){
 fun loadLeaderBoardsForUser(){
     val db = FirebaseFirestore.getInstance()
     val userProfile = getUserProfileData().value
-    val clansList: List<String> = userProfile!!.clansList
+    val clansList: List<String>? = userProfile?.clansList
     if (clansList == null || clansList.isEmpty()) return
 
     clansList.forEach{ clanName ->
@@ -164,6 +164,7 @@ fun loadLeaderBoardsForUser(){
 }
 
 fun loadUsersInClan(clanName: String, clanDoc: DocumentSnapshot, db: FirebaseFirestore){
+    if (!clanDoc.exists() || !clanDoc.contains("members")) return
     var memberIDs = clanDoc.get("members")
     if (memberIDs === null ) return
     memberIDs = memberIDs as List<String>

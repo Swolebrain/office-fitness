@@ -23,4 +23,31 @@ public class TimeTest {
         System.out.println(millisInDay);
         System.out.println(1000L*60L*60L*24L - millisInDay);
     }
+
+    class Time2{
+        int field1;
+        String field2;
+
+        public Time2(int field1, String field2) {
+            this.field1 = field1;
+            this.field2 = field2;
+        }
+
+        public int getField1() {
+            return field1;
+        }
+
+        public void setField1(int field1) {
+            this.field1 = field1;
+        }
+
+        public String getField2() {
+            return field2;
+        }
+
+        public void setField2(String field2) {
+            this.field2 = field2;
+        }
+    }
 }
+
