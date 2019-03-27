@@ -101,7 +101,8 @@ class HistoryFragment : Fragment() {
             workoutLogs.add(log)
         }
 
-        repsPerDayMap.forEach { k, v ->
+
+        repsPerDayMap.forEach { (k, v) ->
             dataPoints.add(DataPoint(6.0 - k, v.toDouble()))
         }
         dataPoints.reverse()
