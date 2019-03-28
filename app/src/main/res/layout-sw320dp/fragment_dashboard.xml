@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient1">
+
+    <TextView
+        android:id="@+id/label_lifetime_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="LifeTime"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.52"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_activity_points" />
+
+    <TextView
+        android:id="@+id/label_activity_this_week"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="Past Week"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/label_activity_points" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/label_activity_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:text="Activity Summary"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/label_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="8dp"
+        android:text="Goals"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_activity_points_1" />
+
+    <TextView
+        android:id="@+id/tv_lifetime_activity_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/label_lifetime_activity"
+        tools:text="485" />
+
+    <TextView
+        android:id="@+id/tv_past_week_activity_points"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/label_activity_this_week"
+        tools:text="125" />
+
+    <TextView
+        android:id="@+id/label_reps_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="Reps Today"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_goal" />
+
+    <TextView
+        android:id="@+id/label_goal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:text="Daily Activity Goal"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/label_goal" />
+
+    <TextView
+        android:id="@+id/tv_reps_today"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/label_reps_today"
+        tools:text="55" />
+
+    <TextView
+        android:id="@+id/tv_goal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="100"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/OFT_cream"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="@+id/label_goal2"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/label_activity_points_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Points"
+        android:textColor="@color/OFT_cream"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_lifetime_activity_points"
+        app:layout_constraintEnd_toEndOf="@+id/tv_lifetime_activity_points"
+        app:layout_constraintStart_toStartOf="@+id/tv_lifetime_activity_points" />
+
+    <TextView
+        android:id="@+id/label_activity_points_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Activity Points"
+        android:textColor="@color/OFT_cream"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_past_week_activity_points"
+        app:layout_constraintEnd_toEndOf="@+id/tv_past_week_activity_points"
+        app:layout_constraintStart_toStartOf="@+id/tv_past_week_activity_points" />
+
+    <TextView
+        android:id="@+id/label_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="Use this app In order to keep yourself active while doing routine office tasks that require low concentration, such as answering emails, attending webinars, waiting on hold, etc."
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_about_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_entypo_help" />
+
+</android.support.constraint.ConstraintLayout>
