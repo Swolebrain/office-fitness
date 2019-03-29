@@ -31,6 +31,7 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
     }
     private lateinit var userProfile: UserProfile
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseSettingsViewHolder {
+
         val inflater : LayoutInflater = LayoutInflater.from(c)
         return when (viewType){
             TITLE_VIEW -> BaseSettingsViewHolder(inflater.inflate(R.layout.fragment_settings_rv_title, parent, false))
@@ -118,7 +119,7 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
                 override fun afterTextChanged(s: Editable?) {}
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    fragment.commitChanges("displayName", s.toString(), null)
+                     fragment.commitChanges("displayName", s.toString(), null)
                 }
 
             })
@@ -139,8 +140,23 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
         var isInitialized = false
         var isSubmitting = false
         fun bindHandlers(){
+
             itemView.et_join_clan.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_FLAG_CAP_WORDS
+            itemView.et_join_clan.addTextChangedListener(object : TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    if( itemView.et_join_clan.text.isBlank() ) {
+                        itemView.til_join_clan.error = "Please enter a clan name"
+                    }else
+                        itemView.til_join_clan.error = null
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            })
             itemView.btn_join_clan.setOnClickListener {
+
+                // validates blank data
+                if( itemView.et_join_clan.text.isBlank() )  return@setOnClickListener
+
                 if (isSubmitting) return@setOnClickListener
                 isSubmitting = true
                 Toast.makeText(fragment.activity, "It may take a minute for clan rankings to update", Toast.LENGTH_LONG)
