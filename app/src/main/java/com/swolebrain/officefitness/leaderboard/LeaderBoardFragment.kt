@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.loadAllTimeRankings
 import com.swolebrain.officefitness.loadLeaderBoards
+import com.swolebrain.officefitness.loadProfileDataFromFireBase
 import com.swolebrain.officefitness.repositories.UserRanking
 import com.swolebrain.officefitness.repositories.getLeaderBoards
+import com.swolebrain.officefitness.repositories.getUserProfileData
 import com.swolebrain.officefitness.repositories.resetLeaderBoards
 import kotlinx.android.synthetic.main.fragment_leader_board.*
 
@@ -25,7 +27,9 @@ public class LeaderBoardFragment : Fragment() {
     private val rankings = mutableMapOf<String, List<UserRanking>>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        loadProfileDataFromFireBase()
         leaderBoardAdapter = LeaderBoardRVAdapter(context!!, this, rankings)
+        leaderBoardAdapter.setProfile(getUserProfileData().value)
         leaderBoardObserver = Observer{
             setContents(it)
         }

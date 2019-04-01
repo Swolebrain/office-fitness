@@ -25,6 +25,11 @@ fun buildUserProfileFromDocument(userDoc: DocumentSnapshot): UserProfile{
     if (clans != null) clans = clans as List<String>
     else clans = listOf<String>()
 
+
+    var userName = userDoc.get("userName")
+    if(userName != null) userName = userName as String
+    else userName = ""
+
     var activityIndexLastUpdated = userDoc.get("activityIndexLastUpdated")
     if (activityIndexLastUpdated != null) activityIndexLastUpdated = activityIndexLastUpdated as Long
     else activityIndexLastUpdated = 0L
@@ -40,11 +45,12 @@ fun buildUserProfileFromDocument(userDoc: DocumentSnapshot): UserProfile{
     if (activityIndexHistory != null) activityIndexHistory = activityIndexHistory as List<Number>
     else activityIndexHistory = listOf<Number>(0,0,0,0,0,0,0)
 
-    return UserProfile(displayName, gender, clans, activityIndexLastUpdated, allTimeActivity, activityIndexHistory)
+    return UserProfile(displayName, userName ,gender, clans, activityIndexLastUpdated, allTimeActivity, activityIndexHistory)
 }
 
 data class UserProfile(
         val displayName : String = "",
+        val userName : String ="",
         val gender: String,
         val clansList : List<String>,
         val activityIndexLastUpdated: Long,

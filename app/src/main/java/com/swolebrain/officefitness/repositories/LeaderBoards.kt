@@ -23,6 +23,7 @@ fun processUserIntoLeaderBoard(clan: String, userSnapshot: DocumentSnapshot, mem
 
     var displayName = userSnapshot.get("displayName")
     if (displayName == null) displayName = userSnapshot.get("userName")
+
     val activityIndexHistory = userSnapshot.get("activityIndexHistory")
     val activityIndexLastUpdated = userSnapshot.get("activityIndexLastUpdated")
     if (activityIndexHistory == null || activityIndexLastUpdated == null || displayName == null) return;
@@ -50,7 +51,7 @@ fun loadListOfUsers(clan: String, users: QuerySnapshot?){
     if (leaderBoardData == null) leaderBoardData = mutableMapOf()
     val usersList = users?.documents?.map{
         var displayName = it.get("displayName")
-        if (displayName == null) displayName = it.get("userName")
+        if (displayName == null ||  displayName.toString().isBlank()) displayName = it.get("userName")
         val activityIndexHistory = it.get("activityIndexHistory")
         val activityIndexLastUpdated = it.get("activityIndexLastUpdated")
         if (displayName == null || activityIndexHistory == null || activityIndexLastUpdated == null) return@map UserRanking("", 0, "")
@@ -79,9 +80,6 @@ fun resetLeaderBoards(){
     clanMemberLists.clear()
     leaderBoards.value = mutableMapOf()
 }
-
-
-
 
 
 data class UserRanking(val name: String, val activityIndex: Int, val pictureUrl: String, var rank: Int = 1)
