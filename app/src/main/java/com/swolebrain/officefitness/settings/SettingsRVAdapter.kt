@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.firebase.ui.auth.data.model.User
 import com.swolebrain.officefitness.R
 import com.swolebrain.officefitness.loadProfileDataFromFireBase
 import com.swolebrain.officefitness.repositories.UserProfile
@@ -37,7 +38,8 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
             TITLE_VIEW -> BaseSettingsViewHolder(inflater.inflate(R.layout.fragment_settings_rv_title, parent, false))
             DISPLAY_NAME_SELECT_VIEW -> EditDisplayNameViewHolder(
                     inflater.inflate(R.layout.fragment_settings_rv_display_name_select, parent, false),
-                    this.fragment
+                    this.fragment,
+                    userProfile
             )
             GENDER_SELECT_VIEW -> GenderSelectViewHolder(
                     inflater.inflate(R.layout.fragment_settings_rv_gender_select, parent, false),
@@ -67,7 +69,11 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
             }
             DISPLAY_NAME_SELECT_VIEW -> {
                 if (::userProfile.isInitialized){
-                    holder.itemView.display_name_input.setText(userProfile.displayName)
+                    if(!userProfile.displayName.isBlank())
+                         holder.itemView.display_name_input.setText(userProfile.displayName)
+                    else
+                         holder.itemView.display_name_input.setText ( userProfile.userName )
+
                     if (!(holder as EditDisplayNameViewHolder).isInitialized) holder.bindHandlers()
                 }
             }
@@ -112,11 +118,17 @@ class SettingsRVAdapter(val c: Context, val fragment :SettingsFragment) : Recycl
 
     open class BaseSettingsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
-    class EditDisplayNameViewHolder(itemView: View, val fragment: SettingsFragment) : BaseSettingsViewHolder(itemView){
+    class EditDisplayNameViewHolder(itemView: View, val fragment: SettingsFragment, val userProfile: UserProfile) : BaseSettingsViewHolder(itemView){
         var isInitialized = false
         fun bindHandlers(){
             itemView.display_name_input.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {}
+                override fun afterTextChanged(s: Editable?) {
+                    if(s != null){
+                        if( s.isBlank()){
+                            s.insert(0, userProfile.userName)
+                        }
+                    }
+                }
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                      fragment.commitChanges("displayName", s.toString(), null)
